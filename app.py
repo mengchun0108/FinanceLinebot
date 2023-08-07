@@ -70,7 +70,7 @@ def handle_message(event):
 
         )
 
-@handler.add(FloowEvent)
+@handler.add(FollowEvent)
 def handle_follow(event):
     welcome_msg = '''HiHi 歡迎成為基德的夥伴！
                                 
