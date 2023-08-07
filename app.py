@@ -30,8 +30,8 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message_text == str(event.message.text).lower()
-                                   
+    message_text = str(event.message.text).lower()
+
     if message_text == '@使用說明':
         about_us_event(event)
 
