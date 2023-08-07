@@ -31,7 +31,10 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
+    profile = line_bot_api.get_profile(event.source.user_id)
+    uid = profile.user_id
     message_text = str(event.message.text).lower()
+
     ############################## 使用說明 選單 基德 油價查詢 ##############################
     if message_text == '@使用說明':
         about_us_event(event)
@@ -69,6 +72,9 @@ def handle_message(event):
             TextSendMessage(text=content)
 
         )
+    ############################## 股票區 ##############################
+    if event.message.text == "股價查詢":
+        line_bot_api.push_message(uid, TextSendMessage("請輸入#加股票代號..."))
 
 @handler.add(FollowEvent)
 def handle_follow(event):
