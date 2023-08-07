@@ -39,7 +39,7 @@ def handle_message(event):
     # 自己設定回覆訊息
     emoji = [
             {
-                "index": 5,
+                "index": 0,
                 "productId": "5ac2280f031a6752fb806d65",
                 "emojiId": "005"
             },
@@ -60,8 +60,8 @@ HiHi 歡迎成為一起賺大錢的夥伴！
 - 期待你的光臨！''', emojis = emoji)
     
     sticker_message = StickerSendMessag(
-        package_id = '8522',
-        sticker_id ='16581271'
+        package_id = '11539',
+        sticker_id ='52114118'
     )
     line_bot_api.reply_message(
         event.reply_token,
