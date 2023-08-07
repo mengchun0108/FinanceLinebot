@@ -32,9 +32,41 @@ def callback():
 # 處理訊息
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    message = TextSendMessage(text=event.message.text)
-    line_bot_api.reply_message(event.reply_token, message)
+    # 自動回覆相同訊息
+    # message = TextSendMessage(text=event.message.text)
+    # line_bot_api.reply_message(event.reply_token, message)
 
+    # 自己設定回覆訊息
+    emoji = [
+            {
+                "index": 5,
+                "productId": "5ac2280f031a6752fb806d65",
+                "emojiId": "005"
+            },
+            {
+                "index": 17,
+                "productId": "5ac2280f031a6752fb806d65",
+                "emojiId": "005"
+            }
+    ]
+
+    text_message = TextSendMessage(text='''$ Master Finance $
+HiHi 歡迎成為一起賺大錢的夥伴！
+我是你的賺錢好夥伴
+                                
+- 這裡有股票 匯率資訊哦~
+- 直接點選下方圖中選單功能
+                                   
+- 期待你的光臨！''', emojis = emoji)
+    
+    sticker_message = StickerSendMessag(
+        package_id = '8522',
+        sticker_id ='16581271'
+    )
+    line_bot_api.reply_message(
+        event.reply_token,
+        [text_message, sticker_message])
+                                   
 
 if __name__ == "__main__":
     app.run()
