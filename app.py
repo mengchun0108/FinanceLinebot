@@ -70,5 +70,22 @@ def handle_message(event):
 
         )
 
+@handler.add(FloowEvent)
+def handle_follow(event):
+    welcome_msg = '''HiHi 歡迎成為基德的夥伴！
+                                
+- 這裡有股票和匯率資訊哦
+- 直接點選下方圖中選單功能
+                                   
+期待你的使用！'''
+                                  
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=welcome_msg))
+
+@handler.add(UnfollowEvent)
+def handle_unfollow(event):
+    print(event)
+
 if __name__ == "__main__":
     app.run()
