@@ -38,7 +38,7 @@ def handle_message(event):
 
     if event.message.text == "@基德":
         buttons_template = TemplateSendMessage(
-            alt_text = 'template',
+            alt_text = '你已得到基德的幫助',
             template=ButtonsTemplate(
                 title='選擇服務',
                 text='請選擇',
