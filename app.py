@@ -38,12 +38,12 @@ def handle_message(event):
 
     if event.message.text == "@基德":
         buttons_template = TemplateSendMessage(
-            alt_text = '基德 template',
+            alt_text = 'template',
             template=ButtonsTemplate(
                 title='選擇服務',
                 text='請選擇',
                 thumbnail_image_url='https://imgur.com/mBwctnk.jpg',
-                action=[
+                actions=[
                     MessageTemplateAction(
                         label="油價查詢",
                         text = '油價查詢'
