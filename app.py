@@ -41,12 +41,12 @@ def handle_message(event):
             {
                 "index": 0,
                 "productId": "5ac2280f031a6752fb806d65",
-                "emojiId": "005"
+                "emojiID": "005"
             },
             {
                 "index": 17,
                 "productId": "5ac2280f031a6752fb806d65",
-                "emojiId": "005"
+                "emojiID": "005"
             }
     ]
 
@@ -59,7 +59,7 @@ HiHi 歡迎成為一起賺大錢的夥伴！
                                    
 - 期待你的光臨！''', emojis = emoji)
     
-    sticker_message = StickerSendMessag(
+    sticker_message = StickerSendMessage(
         package_id = '11539',
         sticker_id ='52114118'
     )
