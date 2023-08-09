@@ -29,8 +29,8 @@ def getExchangeRate(msg):
 # 不同貨幣直接換算（非只限於台幣）
     """
     sample
-    code = 換匯USD/TWD/100;
-    code = 換匯USD/JPY/100;
+    code = '換匯USD/TWD/100';
+    code = '換匯USD/JPY/100';
     """
     currency_list = msg[2:].split("/")
     currency = currency_list[0]
