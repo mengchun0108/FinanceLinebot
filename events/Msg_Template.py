@@ -92,7 +92,8 @@ def show_Button():
                         },
                         {
                             "type": "separator",
-                            "margin": "md"
+                            "margin": "md",
+                            "color": "#FBD85D"
                         },
                         {
                             "type": "box",
@@ -138,7 +139,8 @@ def show_Button():
                         },
                         {
                             "type": "separator",
-                            "margin": "md"
+                            "margin": "md",
+                            "color": "#FBD85D"
                         },
                         {
                             "type": "box",
@@ -184,7 +186,8 @@ def show_Button():
                         },
                         {
                             "type": "separator",
-                            "margin": "md"
+                            "margin": "md",
+                            "color": "#FBD85D"
                         },
                         {
                             "type": "box",
@@ -230,7 +233,8 @@ def show_Button():
                         },
                         {
                             "type": "separator",
-                            "margin": "md"
+                            "margin": "md",
+                            "color": "#FBD85D"
                         },
                         {
                             "type": "box",
@@ -276,7 +280,8 @@ def show_Button():
                         },
                         {
                             "type": "separator",
-                            "margin": "md"
+                            "margin": "md",
+                            "color": "#FBD85D"
                         },
                         {
                             "type": "box",
@@ -330,6 +335,6 @@ def show_Button():
                         "backgroundColor": "#FBD85D"
                         }
                     }
-                    }                
+                    }             
     )
     return flex_message
