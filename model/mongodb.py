@@ -7,7 +7,7 @@ stockDB='mydb'
 dbname = 'howard-good31'
 
 def constructor_stock(): 
-    client = MongoClient("")
+    client = MongoClient("mongodb://popcornbc0108:<cuteflower0812>@ac-cfbooje-shard-00-00.8to1mbr.mongodb.net:27017,ac-cfbooje-shard-00-01.8to1mbr.mongodb.net:27017,ac-cfbooje-shard-00-02.8to1mbr.mongodb.net:27017/?ssl=true&replicaSet=atlas-13bpwh-shard-0&authSource=admin&retryWrites=true&w=majority")
     db = client[stockDB]
     return db
 
