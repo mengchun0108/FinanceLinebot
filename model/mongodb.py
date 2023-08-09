@@ -3,7 +3,7 @@ import datetime
 from bs4 import BeautifulSoup
 import requests
 # Authentication Database認證資料庫
-stockDB='mydb'
+stockDB='testdb'
 dbname = 'howard-good31'
 
 def constructor_stock(): 
