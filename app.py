@@ -81,7 +81,7 @@ def handle_message(event):
         )
     ############################## 股票區 ##############################
     if event.message.text == "股價查詢":
-        line_bot_api.push_message(uid, TextSendMessage("請輸入#加股票代號..."))
+        line_bot_api.push_message(uid, TextSendMessage("請輸入#股票代號"))
         # 用push_message方式回覆話語
 
     # 股價查詢

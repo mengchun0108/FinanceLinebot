@@ -10,7 +10,7 @@ def stock_reply_other(stockNumber):
                                         items = [
                                             QuickReplyButton(
                                                 action = MessageAction(
-                                                    label = "#+股票代號查詢",
+                                                    label = "#股票代號 查詢",
                                                     text = '#'+stockNumber
                                                 )
                                             ),
