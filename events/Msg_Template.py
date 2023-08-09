@@ -327,10 +327,9 @@ def show_Button():
                         "backgroundColor": "#1A5D1A"
                         },
                         "footer": {
-                        "separatorColor": "#FBD85D",
                         "backgroundColor": "#FBD85D"
                         }
                     }
-                    }              
+                    }                
     )
     return flex_message
