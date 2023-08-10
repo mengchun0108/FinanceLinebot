@@ -148,10 +148,10 @@ def handle_message(event):
         message = show_Button()
         line_bot_api.reply_message(event.reply_token, message)
 
-    if re.match('換匯[A-Z]{3}/[A-Z]{3}/100',emsg):
-        line_bot_api.reply_message(uid, TextSendMessage("基德將為您做外匯計算"))
+    if re.match('換匯[A-Z]{3}/[A-Z]{3}/100',msg):
+        line_bot_api.push_message(uid, TextSendMessage("基德將為您做外匯計算"))
         content = getExchangeRate(msg)
-        line_bot_api.reply_message(uid, TextSendMessage(content))
+        line_bot_api.push_message(uid, TextSendMessage(content))
                                               
 @handler.add(FollowEvent)
 def handle_follow(event):
