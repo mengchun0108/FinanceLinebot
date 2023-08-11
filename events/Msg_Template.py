@@ -57,7 +57,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "美金",
-                                "text": "USD"
+                                "text": "查詢匯率USD"
                                 },
                                 "gravity": "center",
                                 "color": "#65451F",
@@ -69,7 +69,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "日圓",
-                                "text": "JPY"
+                                "text": "查詢匯率JPY"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -81,7 +81,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "港幣",
-                                "text": "HKD"
+                                "text": "查詢匯率HKD"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -104,7 +104,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "英鎊",
-                                "text": "GBP"
+                                "text": "查詢匯率GBP"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -116,7 +116,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "澳幣",
-                                "text": "AUD"
+                                "text": "查詢匯率AUD"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -128,7 +128,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "加幣",
-                                "text": "CAD"
+                                "text": "查詢匯率CAD"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -151,7 +151,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "法郎",
-                                "text": "CHF"
+                                "text": "查詢匯率CHF"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -163,7 +163,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "新加坡",
-                                "text": "SGD"
+                                "text": "查詢匯率SGD"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -175,7 +175,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "南非幣",
-                                "text": "ZAR"
+                                "text": "查詢匯率ZAR"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -198,7 +198,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "瑞典幣",
-                                "text": "SEK"
+                                "text": "查詢匯率SEK"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -210,7 +210,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "泰幣",
-                                "text": "THB"
+                                "text": "查詢匯率THB"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -222,7 +222,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "菲比索",
-                                "text": "PHP"
+                                "text": "查詢匯率PHP"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -245,7 +245,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "印尼幣",
-                                "text": "IDR"
+                                "text": "查詢匯率IDR"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -257,7 +257,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "韓元",
-                                "text": "KRW"
+                                "text": "查詢匯率KRW"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -269,7 +269,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "馬來幣",
-                                "text": "MYR"
+                                "text": "查詢匯率MYR"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -292,7 +292,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "越南盾",
-                                "text": "VND"
+                                "text": "查詢匯率VND"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -304,7 +304,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "人民幣",
-                                "text": "CNY"
+                                "text": "查詢匯率CNY"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
@@ -316,7 +316,7 @@ def show_Button():
                                 "action": {
                                 "type": "message",
                                 "label": "紐元",
-                                "text": "NZD"
+                                "text": "查詢匯率NZD"
                                 },
                                 "gravity": "center",
                                 "style": "primary",
