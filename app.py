@@ -226,7 +226,7 @@ def handle_message(event):
                 for k in range(len(dataList[i])):
                     #print(dataList[i][k])
                     look_stock_price(dataList[i][k]['favorite_stock'], dataList[i][k]['condition'], dataList[i][k]['price'], dataList[i][k]['userID'])
-        schedule.every(30).seconds.do(job).tag('daily-tasks-stock'+ uid , 'second')
+        schedule.every(5).seconds.do(job).tag('daily-tasks-stock'+ uid , 'second')
         # 每10秒執行一次
         # schedule.every().hour.do(job)
         # 每小時執行一次
