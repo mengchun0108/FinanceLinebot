@@ -206,17 +206,17 @@ def handle_message(event):
                 content += "\n篩選條件為： <" + price
                 if float(getstock) < float(price):
                     content += "\n符合" + getstock + " < " + price + "的篩選條件"
-                    line_bot_api.push_message(userID, TemplateSendMessage(text=content))
+                    line_bot_api.push_message(userID, TextSendMessage(text=content))
             elif condition == '>':
                 content += "\n篩選條件為： >" + price
                 if float(getstock) > float(price):
                     content += "\n符合" + getstock + " > " + price + "的篩選條件"
-                    line_bot_api.push_message(userID, TemplateSendMessage(text=content))   
+                    line_bot_api.push_message(userID, TextSendMessage(text=content))   
             elif condition == '=':
                 content += "\n篩選條件為： =" + price
                 if float(getstock) == float(price):
                     content += "\n符合" + getstock + " = " + price + "的篩選條件"
-                    line_bot_api.push_message(userID, TemplateSendMessage(text=content))
+                    line_bot_api.push_message(userID, TextSendMessage(text=content))
         def job():
             print('HH')
             line_bot_api.push_message(uid, TextSendMessage("快去買！"))
