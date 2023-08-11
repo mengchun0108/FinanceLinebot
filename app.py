@@ -11,6 +11,17 @@ import datetime
 
 app = Flask(__name__)
 
+# 抓使用者設定他關心的股票
+def cache_users_stock():
+    db = constructor_stock()
+    nameList = db.list_collection_names()
+    users = []
+    for i in range(len(nameList)):
+        collect = db[nameList[i]]
+        cel = list(collect.find({"tag":'stock'}))
+        users.append(cel)
+    return users
+
 # 必須放上自己的Channel Access Token
 line_bot_api = LineBotApi('y183jnCciIWryNOI+kTjMm80wyo/KStYQCOLMlqrz4UZ62jOrdkaKMZ/N51MWbMfeqPB6pLdVbTxBim+pn6HExanDVsx7N994f0uOPVrVE/iBJiwBCWexTrbmIFrf5P3CG8LbKBseyKInUlkvynGgwdB04t89/1O/w1cDnyilFU=')
 # 必須放上自己的Channel Secret
@@ -175,7 +186,44 @@ def handle_message(event):
         line_bot_api.push_message(uid, TextSendMessage("基德將為您做外匯計算"))
         content = getExchangeRate(msg)
         line_bot_api.push_message(uid, TextSendMessage(content))
-                                              
+
+    ############################## 股票提醒區 ##############################
+    if re.match("股價提醒", msg):
+        import schedule
+        import time
+        #查看當前股價
+        def look_stock_price(stock, condition, price, userID):
+            print(userID)
+            url = 'http://tw.stock.yahoo.com/q/q?s=' + stock
+            list_req = requests.get(url)
+            soup = BeautifulSoup(list_req.content, "html.parser")
+            getstock = soup.findAll('b')[1].text
+            content = stock + "當前股市價格為：" + getstock
+            if condition == '<':
+                content += "/n篩選條件為： <" + price
+                if float(getstock) < float(price):
+                    content += "\n符合" + getstock + " < " + price + "的篩選條件"
+                    line_bot_api.push_message(userID, TemplateSendMessage(text=content))
+            elif condition == '>':
+                content += "/n篩選條件為： >" + price
+                if float(getstock) > float(price):
+                    content += "\n符合" + getstock + " > " + price + "的篩選條件"
+                    line_bot_api.push_message(userID, TemplateSendMessage(text=content))   
+            elif condition == '=':
+                content += "/n篩選條件為： =" + price
+                if float(getstock) == float(price):
+                    content += "\n符合" + getstock + " = " + price + "的篩選條件"
+                    line_bot_api.push_message(userID, TemplateSendMessage(text=content))
+        def job():
+            print('HH')
+            dataList = cache_users_stock()
+            # print(dataList)
+            for i in range(len(dataList)):
+                for k in range(len(dataList[i])):
+                    #print(dataList[i][k])
+                    look_stock_price(dataList[i][k]['favorite_stock'], dataList[i][k]['condition'], dataList[i][k]['price'], dataList[i][k]['userID'])
+        schedule.every(30).seconds.do(job).tag('daily-tasks-stock'+ uid , 'second')
+        # 每10秒執行一次
 @handler.add(FollowEvent)
 def handle_follow(event):
     welcome_msg = '''HiHi 歡迎成為基德的夥伴！
