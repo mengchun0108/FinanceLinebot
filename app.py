@@ -75,7 +75,7 @@ def handle_message(event):
                     ),
                     MessageTemplateAction(
                         label="匯率查詢",
-                        text = '匯率查詢'
+                        text = '幣別種類'
                     ),
                     MessageTemplateAction(
                         label="股價查詢",
@@ -99,7 +99,7 @@ def handle_message(event):
         # 用push_message方式回覆話語
 
     # 股價查詢
-    if re.match("想知道股價", msg):
+    if re.match("股票資訊", msg):
         btn_msg = stock_reply_other(msg)
         line_bot_api.push_message(uid, btn_msg)
         return 0
@@ -188,6 +188,9 @@ def handle_message(event):
         line_bot_api.push_message(uid, TextSendMessage(content))
 
     ############################## 股票提醒區 ##############################
+    if re.match("關閉提醒", msg):
+        import schedule
+        schedule.clear()
     if re.match("股價提醒", msg):
         import schedule
         import time

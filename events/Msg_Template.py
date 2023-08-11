@@ -3,23 +3,29 @@ from line_bot_api import *
 
 
 def stock_reply_other(stockNumber):
-    content_text = "即時股價和K線圖"
+    content_text = "請點選下列按鈕獲得資訊"
     text_message =  TextSendMessage(
                                     text = content_text,
                                     quick_reply=QuickReply(
                                         items = [
                                             QuickReplyButton(
                                                 action = MessageAction(
-                                                    label = "#股票代號 查詢",
-                                                    text = '#'+stockNumber
+                                                    label = "股票清單",
+                                                    text = "股票清單"
                                                 )
                                             ),
                                             QuickReplyButton(
                                                 action = MessageAction(
-                                                    label = "K線圖",
-                                                    text = '@K'+stockNumber
+                                                    label = "股價提醒",
+                                                    text = "股價提醒"
                                             )
-                                            ) 
+                                            ),
+                                            QuickReplyButton(
+                                                action = MessageAction(
+                                                    label = "關閉提醒",
+                                                    text = "關閉提醒"
+                                                )
+                                            )
                                         ]
                                     ))  
     return text_message
