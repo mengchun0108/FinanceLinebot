@@ -203,17 +203,17 @@ def handle_message(event):
             getstock = soup.findAll('span')[11].text
             content = stock + "當前股市價格為：" + getstock
             if condition == '<':
-                content += "/n篩選條件為： <" + price
+                content += "\n篩選條件為： <" + price
                 if float(getstock) < float(price):
                     content += "\n符合" + getstock + " < " + price + "的篩選條件"
                     line_bot_api.push_message(userID, TemplateSendMessage(text=content))
             elif condition == '>':
-                content += "/n篩選條件為： >" + price
+                content += "\n篩選條件為： >" + price
                 if float(getstock) > float(price):
                     content += "\n符合" + getstock + " > " + price + "的篩選條件"
                     line_bot_api.push_message(userID, TemplateSendMessage(text=content))   
             elif condition == '=':
-                content += "/n篩選條件為： =" + price
+                content += "\n篩選條件為： =" + price
                 if float(getstock) == float(price):
                     content += "\n符合" + getstock + " = " + price + "的篩選條件"
                     line_bot_api.push_message(userID, TemplateSendMessage(text=content))
