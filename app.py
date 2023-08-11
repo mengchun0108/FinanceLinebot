@@ -194,7 +194,7 @@ def handle_message(event):
         #查看當前股價
         def look_stock_price(stock, condition, price, userID):
             print(userID)
-            url = 'http://tw.stock.yahoo.com/q/q?s=' + stock
+            url = 'https://tw.stock.yahoo.com/q/q?s=' + stock
             list_req = requests.get(url)
             soup = BeautifulSoup(list_req.content, "html.parser")
             getstock = soup.findAll('b')[1].text
@@ -216,6 +216,7 @@ def handle_message(event):
                     line_bot_api.push_message(userID, TemplateSendMessage(text=content))
         def job():
             print('HH')
+            line_bot_api.push_message(uid, TextSendMessage("快去買！"))
             dataList = cache_users_stock()
             # print(dataList)
             for i in range(len(dataList)):
@@ -237,7 +238,7 @@ def handle_message(event):
         while True:
             schedule.run_pending()
             time.sleep(1)
-            
+
 @handler.add(FollowEvent)
 def handle_follow(event):
     welcome_msg = '''HiHi 歡迎成為基德的夥伴！
