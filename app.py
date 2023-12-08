@@ -141,7 +141,7 @@ def handle_message(event):
         return 0
 
     #if (emsg.startswith('#')):
-    if re.match('#', msg):
+    if re.match('#[0-9]{4}', msg):
         text = emsg[1:]
         content =''
 
