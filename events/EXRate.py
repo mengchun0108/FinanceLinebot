@@ -44,7 +44,7 @@ def getExchangeRate(msg):
     amount = float(pd_currency[currency1])
     content = "目前的兌換率為：" + str(amount) + " " + currency1 + "\n查詢的金額為："
     content += str(round(amount * (money_value), 4)) + " " + currency1
-    return content, pd_currency
+    return content
 
 # 查詢匯率
 def showCurrency(code) -> "JPY": 
