@@ -41,10 +41,10 @@ def getExchangeRate(msg):
     res = requests.get(url_coinbase)
     jData = res.json()
     pd_currency = jData['data']['rates']
-    content = f'目前的兌換率為：{pd_currency[currency1]}{currency1} \n查詢的金額為：'
     amount = float(pd_currency[currency1])
-    content += str(round(amount * (money_value), 2)) + " " + currency1
-    return content
+    content = "目前的兌換率為：" + str(amount) + " " + currency1 + "\n查詢的金額為："
+    content += str(round(amount * (money_value), 4)) + " " + currency1
+    return content, pd_currency
 
 # 查詢匯率
 def showCurrency(code) -> "JPY": 
