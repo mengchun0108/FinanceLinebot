@@ -184,7 +184,7 @@ def handle_message(event):
 
     if re.match('換匯[A-Z]{3}/[A-Z]{3}/100',msg):
         line_bot_api.push_message(uid, TextSendMessage("基德將為您做外匯計算"))
-        content = getExchangeRate(msg)
+        content = main(msg)
         line_bot_api.push_message(uid, TextSendMessage(content))
 
     ############################## 股票提醒區 ##############################

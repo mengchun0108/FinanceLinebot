@@ -26,25 +26,47 @@ def getCurrencyName(currency):
     except: return "無可支援的外幣"
     return currency_name
 
-def getExchangeRate(msg):
-# 不同貨幣直接換算（非只限於台幣）
-    """
-    sample
-    code = '換匯USD/TWD/100;
-    code = '換匯USD/JPY/100'
-    """
+# def getExchangeRate(msg):
+# # 不同貨幣直接換算（非只限於台幣）
+#     """
+#     sample
+#     code = '換匯USD/TWD/100;
+#     code = '換匯USD/JPY/100'
+#     """
+#     currency_list = msg[2:].split("/")
+#     currency = currency_list[0]
+#     currency1 = currency_list[1]
+#     money_value = float(currency_list[2])
+#     url_coinbase = 'https://api.coinbase.com/v2/exchange-rates?currency=' + currency
+#     res = requests.get(url_coinbase)
+#     jData = res.json()
+#     pd_currency = jData['data']['rates']
+#     amount = float(pd_currency[currency1])
+#     content = "目前的兌換率為：" + str(amount) + " " + currency1 + "\n查詢的金額為："
+#     content += str(round(amount * (money_value), 4)) + " " + currency1
+#     return content
+
+def get_exchange_rate(currency):
+    session = requests.Session()
+    url_coinbase = f'https://api.coinbase.com/v2/exchange-rates?currency={currency}'
+    res = session.get(url_coinbase)
+    jData = res.json()
+    return jData['data']['rates']
+
+def main(msg):
     currency_list = msg[2:].split("/")
     currency = currency_list[0]
     currency1 = currency_list[1]
     money_value = float(currency_list[2])
-    url_coinbase = 'https://api.coinbase.com/v2/exchange-rates?currency=' + currency
-    res = requests.get(url_coinbase)
-    jData = res.json()
-    pd_currency = jData['data']['rates']
+
+    pd_currency = get_exchange_rate(currency)
     amount = float(pd_currency[currency1])
-    content = "目前的兌換率為：" + str(amount) + " " + currency1 + "\n查詢的金額為："
-    content += str(round(amount * (money_value), 4)) + " " + currency1
+
+    content = f"目前的兌換率為：{amount} {currency1}\n查詢的金額為：{round(amount * money_value, 4)} {currency1}"
+
     return content
+
+
 
 # 查詢匯率
 def showCurrency(code) -> "JPY": 
