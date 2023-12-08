@@ -177,10 +177,11 @@ def handle_message(event):
         # date5 = stock.date[-5:][::-1]
         # for i in range(len(price5)):
         #     content += '[%s] %s\n' % (date5[i].strftime("%Y-%m-%d"), price5[i])
-        line_bot_api.reply_message(
-            event.reply_token, 
-            TextSendMessage(text=content)
-        )
+        # line_bot_api.reply_message(
+        #     event.reply_token, 
+        #     TextSendMessage(text=content)
+        # )
+        line_bot_api.push_message(uid, TextSendMessage(content))
         
     ############################## 匯率區 ##############################
     if re.match('幣別種類',emsg):
