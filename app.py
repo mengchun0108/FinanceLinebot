@@ -182,7 +182,7 @@ def handle_message(event):
         content = showCurrency(msg)
         line_bot_api.push_message(uid, TextSendMessage(content))
 
-    if re.match('換匯[A-Z]{3}/[A-Z]{3}/100',msg):
+    if re.match('換匯[A-Z]{3}/[A-Z]{3}',msg):
         line_bot_api.push_message(uid, TextSendMessage("基德將為您做外匯計算"))
         content = main(msg)
         line_bot_api.push_message(uid, TextSendMessage(content))
