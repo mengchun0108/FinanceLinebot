@@ -144,18 +144,15 @@ def handle_message(event):
     if re.match('#', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
         text = emsg[1:]
-        content =''
-
         stock = twstock.realtime.get(text)
-        content = stock['info']['name'] + "（" + stock['info']['code'] + "）\n" 
-        content += '現價: %s \n開盤: %s\n'%(
-                    stock['realtime']['latest_trade_price'],
-                    stock['realtime']['open'])
-        content += '最高: %s \n最低: %s\n'%(
-                    stock['realtime']['high'],
-                    stock['realtime']['low'])
-        content += '量: %s\n'%(stock['realtime']['accumulate_trade_volume'])
-        content += "更新時間：" + stock['info']['time'].replace("-",".")
+        stock_info = stock['info']
+        realtime_info = stock['realtime']
+
+        content = f"{stock_info['name']}（{stock_info['code']}）\n"
+        content += f"現價: {realtime_info['latest_trade_price']} \n開盤: {realtime_info['open']}\n"
+        content += f"最高: {realtime_info['high']} \n最低: {realtime_info['low']}\n"
+        content += f"量: {realtime_info['accumulate_trade_volume']}\n"
+        content += f"更新時間：{stock_info['time'].replace('-', '.')}"
         # stock_rt = twstock.realtime.get(text)
         # my_datetime = datetime.datetime.fromtimestamp(stock_rt['timestamp']+8*60*60)
         # my_time = my_datetime.strftime('%H:%M:%S')
@@ -180,11 +177,11 @@ def handle_message(event):
         # date5 = stock.date[-5:][::-1]
         # for i in range(len(price5)):
         #     content += '[%s] %s\n' % (date5[i].strftime("%Y-%m-%d"), price5[i])
-        # line_bot_api.reply_message(
-        #     event.reply_token, 
-        #     TextSendMessage(text=content)
-        # )
-        return content
+        line_bot_api.reply_message(
+            event.reply_token, 
+            TextSendMessage(text=content)
+        )
+        
     ############################## 匯率區 ##############################
     if re.match('幣別種類',emsg):
         message = show_Button()
