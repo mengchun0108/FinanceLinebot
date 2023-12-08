@@ -143,7 +143,7 @@ def handle_message(event):
     #if (emsg.startswith('#')):
     if re.match('#', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
-        text = emsg[1:]
+        text = msg[1:]
         stock = twstock.realtime.get(text)
         stock_info = stock['info']
         realtime_info = stock['realtime']
@@ -182,6 +182,10 @@ def handle_message(event):
         #     TextSendMessage(text=content)
         # )
         line_bot_api.push_message(uid, TextSendMessage(content))
+    if re.match('[0-9]{4}五檔', msg):
+        line_bot_api.push_message(uid, TextSendMessage('稍等一下，五檔查詢中...'))
+        text = emsg[:5]
+        stock = twstock.realtime.get(text)
         
     ############################## 匯率區 ##############################
     if re.match('幣別種類',emsg):
