@@ -141,7 +141,8 @@ def handle_message(event):
         return 0
 
     #if (emsg.startswith('#')):
-    if re.match('#[0-9]{4}', msg):
+    if re.match('#', msg):
+        line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
         text = emsg[1:]
         content =''
 
