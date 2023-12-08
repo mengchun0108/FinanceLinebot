@@ -11,6 +11,7 @@ def oil_price():
     #gas_price = soup.select('#gas-price')[0].text.replace(' ','')[0]
     #gas_price = soup.select('#gas-price')[0].text.replace('\n\n\n', '').replace(' ','')[0]
     cpc = soup.select('#cpc')[0].text.replace('95油價', '95')
-    cpc = cpc.replace("油價","油價⛽")
+    cpc = cpc.replace("\n今日中油油價\n","今日中油油價⛽")
+
     content = '{}{}'.format(cpc, title)
     return content

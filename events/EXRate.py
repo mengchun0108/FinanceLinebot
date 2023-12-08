@@ -67,7 +67,6 @@ def main(msg):
     return content
 
 
-
 # 查詢匯率
 def showCurrency(code) -> "JPY": 
 # code 為外幣代碼
