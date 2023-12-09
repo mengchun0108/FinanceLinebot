@@ -134,6 +134,7 @@ def handle_message(event):
         content = delete_my_stock(user_name, msg[2:])
         line_bot_api.push_message(uid, TextSendMessage(content))
         return 0
+    
     # 清空存在資料庫裡的股票
     if re.match('清空股票', msg):
         content = delete_my_allstock(user_name, uid)
@@ -152,7 +153,7 @@ def handle_message(event):
         realtime_info = stock['realtime']
         
         now = f"{realtime_info['latest_trade_price'][:5]}"
-        open_price = f"{realtime_info['open'][:5]}"
+        #open_price = f"{realtime_info['open'][:5]}"
         
         stock_time = stock_info['time']
         time = stock_time.replace('-', '.').replace(stock_time[11:13], str(int(stock_time[11:13]) + 8))
@@ -167,9 +168,9 @@ def handle_message(event):
         content = f"{stock_info['name']}（{stock_info['code']}）\n"
         content += f"現價: {now}\n"
         content += f"漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
-        content += f"開盤: {open_price}\n"
-        content += f"最高: {realtime_info['high'][:5]}\n最低: {realtime_info['low'][:5]}\n"
-        content += f"量: {realtime_info['accumulate_trade_volume']}\n"
+        # content += f"開盤: {open_price}\n"
+        # content += f"最高: {realtime_info['high'][:5]}\n最低: {realtime_info['low'][:5]}\n"
+        # content += f"量: {realtime_info['accumulate_trade_volume']}\n"
         content += f"更新時間：{time}"
 
         line_bot_api.push_message(uid, TextSendMessage(content))
