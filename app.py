@@ -78,8 +78,8 @@ def handle_message(event):
                         text = '幣別種類'
                     ),
                     MessageTemplateAction(
-                        label="股價查詢",
-                        text = '股價查詢'
+                        label="股票查詢",
+                        text = '股票資訊',
                     )
                 ]
             )
@@ -212,7 +212,7 @@ def handle_message(event):
 
     if re.match("股價提醒", msg):
         dataList = cache_users_stock()
-        content = {}
+        content = []
         # print(dataList)
         for i in range(len(dataList)):
             for k in range(len(dataList[i])):
