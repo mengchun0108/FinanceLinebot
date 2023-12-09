@@ -170,6 +170,20 @@ def handle_message(event):
     #     text = emsg[:5]
     #     stock = twstock.realtime.get(text)
 
+    if re.match('[0-9]{4}其他資訊', msg):
+        line_bot_api.push_message(uid, TextSendMessage('稍等一下，其他資訊查詢中...'))
+        text = msg[:5]
+        realtime_info = twstock.realtime.get(text)['realtime']
+        now = f"{realtime_info['latest_trade_price'][:5]}"
+        open_price = f"{realtime_info['open'][:5]}"
+        
+        content = f"{stock_info['name']}（{stock_info['code']}）\n"
+        content += f"現價: {now}\n"
+        content += f"開盤: {open_price}\n"
+        content += f"最高: {realtime_info['high'][:5]}\n最低: {realtime_info['low'][:5]}\n"
+        content += f"量: {realtime_info['accumulate_trade_volume']}\n"
+
+        line_bot_api.push_message(uid, TextSendMessage(content))
         
     ############################## 匯率區 ##############################
     if re.match('幣別種類',emsg):
