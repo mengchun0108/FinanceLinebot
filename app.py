@@ -172,11 +172,12 @@ def handle_message(event):
 
     if re.match('[0-9]{4}其他資訊', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，其他資訊查詢中...'))
-        text = msg[:5]
+        text = msg[:4]
+
         realtime_info = twstock.realtime.get(text)['realtime']
         now = f"{realtime_info['latest_trade_price'][:5]}"
         open_price = f"{realtime_info['open'][:5]}"
-        
+
         content = f"{stock_info['name']}（{stock_info['code']}）\n"
         content += f"現價: {now}\n"
         content += f"開盤: {open_price}\n"
