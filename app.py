@@ -175,6 +175,7 @@ def handle_message(event):
         text = msg[:4]
 
         realtime_info = twstock.realtime.get(text)['realtime']
+        stock_info = twstock.realtime.get(text)['info']
         now = f"{realtime_info['latest_trade_price'][:5]}"
         open_price = f"{realtime_info['open'][:5]}"
 
