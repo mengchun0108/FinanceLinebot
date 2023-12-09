@@ -23,9 +23,9 @@ def cache_users_stock():
     return users
 
 # 必須放上自己的Channel Access Token
-line_bot_api = LineBotApi('y183jnCciIWryNOI+kTjMm80wyo/KStYQCOLMlqrz4UZ62jOrdkaKMZ/N51MWbMfeqPB6pLdVbTxBim+pn6HExanDVsx7N994f0uOPVrVE/iBJiwBCWexTrbmIFrf5P3CG8LbKBseyKInUlkvynGgwdB04t89/1O/w1cDnyilFU=')
+line_bot_api = LineBotApi('RAwLYo3oZVIR84NQ/a//R0FFmtzS4kkuty8tL7fkAsc6hEjUk48q0JtbpPlX8mr9cDyYZk0NvTToTIkhx6mRbVyeT7s/dvNl1vKKxmNhX3pmiKwFqlx8q0H51r4Wzri0ZWgWQaBaKi0Z0wvOqOw0kQdB04t89/1O/w1cDnyilFU=')
 # 必須放上自己的Channel Secret
-handler = WebhookHandler('b0d867b52ea2085d294fbf521e2119d6')
+handler = WebhookHandler('930c96dd10e22be503722d4d486a507d')
 
 # 監聽所有來自 /callback 的 Post Request
 @app.route("/callback", methods=['POST'])
@@ -222,7 +222,7 @@ def handle_message(event):
             realtime_info = float(twstock.realtime.get(content[j][0])['realtime']['latest_trade_price'][:5])
             if content[j][1] == ">":
                 if float(content[j][2]) > realtime_info:
-                    line_bot_api.push_message(uid, TextSendMessage(text = "賣光光賺大發 !"))
+                    line_bot_api.push_message(uid, TextSendMessage(text = content[j] + "賣光光賺大發 !"))
             elif content[j][1] == "<":
                 if float(content[j][2]) < realtime_info:
                     line_bot_api.push_message(UnicodeEncodeError, TextSendMessage(text = "問就是ALL IN !"))

@@ -16,8 +16,8 @@ def stock_reply_other(stockNumber):
                                             ),
                                             QuickReplyButton(
                                                 action = MessageAction(
-                                                    label = "股價提醒",
-                                                    text = "股價提醒"
+                                                    label = "了解股票",
+                                                    text = "了解股票"
                                             )
                                             ),
                                             QuickReplyButton(
