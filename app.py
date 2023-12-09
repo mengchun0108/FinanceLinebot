@@ -115,11 +115,11 @@ def handle_message(event):
         # 使用者新增股票質股票清單
         stockNumber = msg[2:6]
         line_bot_api.push_message(uid, TextSendMessage("加入股票代碼"+stockNumber))
-        realtime_info = twstock.realtime.get(msg)['realtime']
-        stockNumber = twstock.realtime.get(msg)['info']['name'] + "（" + msg[2:6] + "）"
+        realtime_info = twstock.realtime.get(stockNumber)['realtime']
+        stock_name = twstock.realtime.get(stockNumber)['info']['name'] + "（" + stockNumber + "）"
         now_price = f"{realtime_info['latest_trade_price'][:5]}"
         target_price = msg.split()[1][-5:0]
-        content = write_my_stock(uid, user_name, stockNumber, now_price, target_price)
+        content = write_my_stock(uid, user_name, stock_name, now_price, target_price)
         line_bot_api.push_message(uid, TextSendMessage(content))
     # else:
     #     content = write_my_stock(uid, user_name, "未設定", "未設定")

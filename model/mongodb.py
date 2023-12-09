@@ -19,24 +19,24 @@ def update_my_stock(user_name,  stockNumber, condition , target_price):
     content = f"股票{stockNumber}更新成功"
     return content
 #   -----------    新增使用者的股票       -------------
-def write_my_stock(userID, user_name, stockNumber, now_price , target_price):
+def write_my_stock(userID, user_name, stock_name, now_price , target_price):
     db=constructor_stock()
     collect = db[user_name]
-    is_exit = collect.find_one({"favorite_stock": stockNumber})
+    is_exit = collect.find_one({"favorite_stock": stock_name})
     if is_exit != None :
-        content = update_my_stock(user_name, stockNumber, now_price , target_price)
+        content = update_my_stock(user_name, stock_name, now_price , target_price)
         return content
     else:
         collect.insert_one({
                 "userID": userID,
-                "favorite_stock": stockNumber,
+                "favorite_stock": stock_name,
                 "now_price" :  now_price,
                 "price" : target_price[1:],
                 "condition" : target_price[0],
                 "tag": "stock",
                 "date_info": datetime.datetime.now()
             })
-        return f"{stockNumber}已新增至您的股票清單"
+        return f"{stock_name}已新增至您的股票清單"
 
 #   -----------    秀出使用者的股票條件       -------------
 def show_stock_setting(user_name, userID):
