@@ -104,11 +104,11 @@ def handle_message(event):
         line_bot_api.push_message(uid, btn_msg)
         return 0
     
-    if re.match("想知道股價[0-9]", msg):
-        msg = msg[5:]
-        btn_msg = stock_reply_other(msg)
-        line_bot_api.push_message(uid, btn_msg)
-        return 0
+    # if re.match("想知道股價[0-9]", msg):
+    #     msg = msg[5:]
+    #     btn_msg = stock_reply_other(msg)
+    #     line_bot_api.push_message(uid, btn_msg)
+    #     return 0
     
     # 新增使用者關注的股票到mongodb
     if re.match('關注[0-9]{4}', msg):
@@ -149,16 +149,16 @@ def handle_message(event):
     if re.match('#', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
         text = msg[1:]
-        
-        realtime_info = twstock.realtime.get(text)['realtime']
-        stock_info = twstock.realtime.get(text)['info']
+        realtime_data = twstock.realtime.get(text)
+        realtime_info = realtime_data['realtime']
+        stock_info = realtime_data['info']
         past = twstock.Stock(text)
 
         now = f"{realtime_info['latest_trade_price'][:5]}"
-        stock_time = stock_info['time']
-        time = stock_time.replace('-', '.').replace(stock_time[11:13], str(int(stock_time[11:13]) + 8))
+        time = stock_info['time'].replace('-', '.').replace(stock_info['time'][11:13], str(int(stock_info['time'][11:13]) + 8))
 
-        before = past.price[-1] if 8 < int(time[11:13]) < 14 else past.price[-2]
+        hour = int(time[11:13])
+        before = past.price[-1] if 8 < hour < 14 else past.price[-2]
         increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
 
         content = f"{stock_info['name']}（{stock_info['code']}）\n"
@@ -175,9 +175,9 @@ def handle_message(event):
     #     text = emsg[:5]
     #     stock = twstock.realtime.get(text)
 
-    if re.match('[0-9]{4}其他資訊', msg):
+    if re.match('了解[0-9]{4}', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，其他資訊查詢中...'))
-        text = msg[:4]
+        text = msg[2:6]
 
         realtime_info = twstock.realtime.get(text)['realtime']
         stock_info = twstock.realtime.get(text)['info']
