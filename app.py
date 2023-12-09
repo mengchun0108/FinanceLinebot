@@ -140,52 +140,38 @@ def handle_message(event):
         line_bot_api.push_message(uid, TextSendMessage(content))
         return 0
 
-    #if (emsg.startswith('#')):
+    # 查詢股票資訊
     if re.match('#', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
         text = msg[1:]
         stock = twstock.realtime.get(text)
+        past = twstock.Stock(text)
         stock_info = stock['info']
         realtime_info = stock['realtime']
+        now = realtime_info['latest_trade_price'][:5]
+        open = realtime_info['open'][:5]
+        time = stock['info']['time'].replace('-', '.').replace(time[11:13], str(int(time[11:13]) + 8))
+        if 8 < int(time[11:13]) < 14:
+            before = past.price[-1]
+        else:
+            before = past.price[-2]
 
+        increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
         content = f"{stock_info['name']}（{stock_info['code']}）\n"
-        content += f"現價: {realtime_info['latest_trade_price']} \n開盤: {realtime_info['open']}\n"
-        content += f"最高: {realtime_info['high']} \n最低: {realtime_info['low']}\n"
+        content += "現價: " + now + "\n"
+        content += "漲跌: " + str(round(float(now) - float(before), 2)) + "（ " + str(increase) + " % ）" + "\n"
+        content += "開盤: " + open + "\n"
+        content += f"最高: {realtime_info['high'][:5]} \n最低: {realtime_info['low'][:5]}\n"
         content += f"量: {realtime_info['accumulate_trade_volume']}\n"
-        content += f"更新時間：{stock_info['time'].replace('-', '.')}"
-        # stock_rt = twstock.realtime.get(text)
-        # my_datetime = datetime.datetime.fromtimestamp(stock_rt['timestamp']+8*60*60)
-        # my_time = my_datetime.strftime('%H:%M:%S')
-
-        # content +='%s (%s) %s\n' % (
-        #     stock_rt['info']['name'],
-        #     stock_rt['info']['code'],
-        #     my_time)
-        
-        # content += '現價: %s / 開盤: %s\n'%(
-        #     stock_rt['realtime']['latest_trade_price'],
-        #     stock_rt['realtime']['open'])
-        # content += '最高: %s / 最低:%s\n'%(
-        #     stock_rt['realtime']['high'],
-        #     stock_rt['realtime']['low'])
-        # content += '量: %s\n'%(stock_rt['realtime']['accumulate_trade_volume'])
-
-        # stock = twstock.Stock(text)
-        # content += '-----\n'
-        # content += '最近五日價格: \n'
-        # price5 = stock.price[-5:][::-1]
-        # date5 = stock.date[-5:][::-1]
-        # for i in range(len(price5)):
-        #     content += '[%s] %s\n' % (date5[i].strftime("%Y-%m-%d"), price5[i])
-        # line_bot_api.reply_message(
-        #     event.reply_token, 
-        #     TextSendMessage(text=content)
-        # )
+        content += f"更新時間：" + time
         line_bot_api.push_message(uid, TextSendMessage(content))
-    if re.match('[0-9]{4}五檔', msg):
-        line_bot_api.push_message(uid, TextSendMessage('稍等一下，五檔查詢中...'))
-        text = emsg[:5]
-        stock = twstock.realtime.get(text)
+
+    #  五檔 - 未開發功能
+    # if re.match('[0-9]{4}五檔', msg):
+    #     line_bot_api.push_message(uid, TextSendMessage('稍等一下，五檔查詢中...'))
+    #     text = emsg[:5]
+    #     stock = twstock.realtime.get(text)
+
         
     ############################## 匯率區 ##############################
     if re.match('幣別種類',emsg):
