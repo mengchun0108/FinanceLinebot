@@ -31,8 +31,7 @@ def write_my_stock(userID, user_name, stock_name, now_price , target_price):
                 "userID": userID,
                 "favorite_stock": stock_name,
                 "now_price" :  now_price,
-                "price" : target_price[1:],
-                "condition" : target_price[0],
+                "price" : target_price,
                 "tag": "stock",
                 "date_info": datetime.datetime.now()
             })
@@ -44,9 +43,9 @@ def show_stock_setting(user_name, userID):
     collect = db[user_name]
     dataList = list(collect.find({"userID": userID}))
     if dataList == []: return "您的股票清單是空的，請透過指令新增股票至清單中"
-    content = "股票清單: \n"
+    content = "股票清單: "
     for i in range(len(dataList)):
-        content += f'{dataList[i]["favorite_stock"]}{dataList[i]["condition"]}{dataList[i]["price"]}\n'
+        content = "\n" + dataList[i]["favorite_stock"] + "\n存入時價格: " + dataList[i]["now_price"] + "\n想關注價格: " + dataList[i]["price"]
     return content
 #   -----------    刪除使用者特定的股票       -------------
 def delete_my_stock(user_name, stockNumber):
