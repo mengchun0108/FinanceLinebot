@@ -124,7 +124,7 @@ def handle_message(event):
     
     # 查詢股票篩選條件清單
     if re.match('股票清單', msg):
-        line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
+        line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票清單查詢中...'))
         content = show_stock_setting(user_name, uid)
         line_bot_api.push_message(uid, TextSendMessage(content))
         return 0
@@ -158,9 +158,10 @@ def handle_message(event):
         increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
 
         content = f"{stock_info['name']}（{stock_info['code']}）\n"
+        content += "------------\n"
         content += f"現價: {now}\n"
         content += f"漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
-        content += f"更新時間：{time}"
+        content += f"更新時間：\n{time}"
 
         line_bot_api.push_message(uid, TextSendMessage(content))
 
@@ -181,9 +182,10 @@ def handle_message(event):
 
         content = f"{stock_info['name']}（{stock_info['code']}）\n"
         content += f"現價: {now}\n"
+        content += "------------\n"
         content += f"開盤: {open_price}\n"
         content += f"最高: {realtime_info['high'][:5]}\n最低: {realtime_info['low'][:5]}\n"
-        content += f"量: {realtime_info['accumulate_trade_volume']}\n"
+        content += f"量: {realtime_info['accumulate_trade_volume']}"
 
         line_bot_api.push_message(uid, TextSendMessage(content))
         
