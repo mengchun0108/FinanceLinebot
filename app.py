@@ -111,7 +111,7 @@ def handle_message(event):
         return 0
     
     # 新增使用者關注的股票到mongodb
-    if re.match('關注[0-9]{4}[<>][0-9]', msg):
+    if re.match('關注[0-9]{4}', msg):
         # 使用者新增股票質股票清單
         stockNumber = msg[2:6]
         line_bot_api.push_message(uid, TextSendMessage("加入股票代碼"+stockNumber))
@@ -144,26 +144,34 @@ def handle_message(event):
     if re.match('#', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
         text = msg[1:]
+        
         stock = twstock.realtime.get(text)
         past = twstock.Stock(text)
+        
         stock_info = stock['info']
         realtime_info = stock['realtime']
-        now = realtime_info['latest_trade_price'][:5]
-        open = realtime_info['open'][:5]
-        time = stock['info']['time'].replace('-', '.').replace(time[11:13], str(int(time[11:13]) + 8))
+        
+        now = f"{realtime_info['latest_trade_price'][:5]}"
+        open_price = f"{realtime_info['open'][:5]}"
+        
+        stock_time = stock_info['time']
+        time = stock_time.replace('-', '.').replace(stock_time[11:13], str(int(stock_time[11:13]) + 8))
+        
         if 8 < int(time[11:13]) < 14:
             before = past.price[-1]
         else:
             before = past.price[-2]
 
         increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
+        
         content = f"{stock_info['name']}（{stock_info['code']}）\n"
-        content += "現價: " + now + "\n"
-        content += "漲跌: " + str(round(float(now) - float(before), 2)) + "（ " + str(increase) + " % ）" + "\n"
-        content += "開盤: " + open + "\n"
-        content += f"最高: {realtime_info['high'][:5]} \n最低: {realtime_info['low'][:5]}\n"
+        content += f"現價: {now}\n"
+        content += f"漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
+        content += f"開盤: {open_price}\n"
+        content += f"最高: {realtime_info['high'][:5]}\n最低: {realtime_info['low'][:5]}\n"
         content += f"量: {realtime_info['accumulate_trade_volume']}\n"
-        content += f"更新時間：" + time
+        content += f"更新時間：{time}"
+
         line_bot_api.push_message(uid, TextSendMessage(content))
 
     #  五檔 - 未開發功能
@@ -228,9 +236,9 @@ def handle_message(event):
     #     while True:
     #         schedule.run_pending()
     #         time.sleep(1)
-    if re.match("關閉提醒", msg):
-        import schedule
-        schedule.clear()
+    # if re.match("關閉提醒", msg):
+    #     import schedule
+    #     schedule.clear()
     if re.match("股價提醒", msg):
         import schedule
         import time
