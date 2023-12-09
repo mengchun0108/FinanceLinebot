@@ -118,7 +118,7 @@ def handle_message(event):
         realtime_info = twstock.realtime.get(stockNumber)['realtime']
         stock_name = twstock.realtime.get(stockNumber)['info']['name'] + "（" + stockNumber + "）"
         now_price = f"{realtime_info['latest_trade_price'][:5]}"
-        target_price = msg.split()[1][-5:0] if len(msg.split()[1]) > 7 else "NO"
+        target_price = msg.split()[1][7:] if len(msg.split()[1]) > 7 else "NO"
         content = write_my_stock(uid, user_name, stock_name, now_price, target_price)
         line_bot_api.push_message(uid, TextSendMessage(content))
     # else:
