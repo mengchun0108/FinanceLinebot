@@ -19,19 +19,20 @@ def update_my_stock(user_name,  stockNumber, condition , target_price):
     content = f"股票{stockNumber}更新成功"
     return content
 #   -----------    新增使用者的股票       -------------
-def write_my_stock(userID, user_name, stockNumber, condition , target_price):
+def write_my_stock(userID, user_name, stockNumber, now_price , target_price):
     db=constructor_stock()
     collect = db[user_name]
     is_exit = collect.find_one({"favorite_stock": stockNumber})
     if is_exit != None :
-        content = update_my_stock(user_name, stockNumber, condition , target_price)
+        content = update_my_stock(user_name, stockNumber, now_price , target_price)
         return content
     else:
         collect.insert_one({
                 "userID": userID,
                 "favorite_stock": stockNumber,
-                "condition" :  condition,
-                "price" : target_price,
+                "now_price" :  now_price,
+                "price" : target_price[1:],
+                "condition" : target_price[0],
                 "tag": "stock",
                 "date_info": datetime.datetime.now()
             })
@@ -43,7 +44,7 @@ def show_stock_setting(user_name, userID):
     collect = db[user_name]
     dataList = list(collect.find({"userID": userID}))
     if dataList == []: return "您的股票清單是空的，請透過指令新增股票至清單中"
-    content = "您清單中的選股條件為: \n"
+    content = "股票清單: \n"
     for i in range(len(dataList)):
         content += f'{dataList[i]["favorite_stock"]}{dataList[i]["condition"]}{dataList[i]["price"]}\n'
     return content
