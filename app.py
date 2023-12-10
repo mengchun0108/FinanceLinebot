@@ -190,8 +190,7 @@ def handle_message(event):
 
         # hour = int(time[11:13])
         # before = past.price[-1] if 8 < hour < 14 else past.price[-2]
-        hour = int(stock_info['time'][11:13]) + 8
-        before = past.price[-1] if 8 < hour < 14 else past.price[-2]
+        before = past.price[-1] if 0 < int(stock_info['time'][11:13]) < 6 else past.price[-2]
         increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
 
         content = f"{stock_info['name']}（{stock_info['code']}）\n-------------\n"
