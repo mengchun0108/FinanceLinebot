@@ -48,9 +48,9 @@ def Usage(event):
              \n     ✄------------------------\
              \n🐱基徳可以查詢油價 匯率 股價\
              \n     ------------------------✄\
-             \n💰油價查詢 ➜ \n   點擊下方Fuel price按鈕\
-             \n💰匯率查詢 ➜ \n   點擊下方Exchange rate按鈕\
-             \n💰股價資訊查詢 ➜ \n   點擊下方Stock按鈕\
-             \n💰股價通知 ➜ \n   點擊Reminder按鈕\
-             \n\n🐱需要其他幫助請點擊Kiddo按鈕")
+             \n💰油價查詢 ➜ \n     點擊下方Fuel price按鈕\
+             \n💰匯率查詢 ➜ \n     點擊下方Exchange rate按鈕\
+             \n💰股價資訊查詢 ➜ \n     點擊下方Stock按鈕\
+             \n💰股價通知 ➜ \n     點擊Reminder按鈕\
+             \n\n🐱需要其他幫助請點擊Kiddo")
     

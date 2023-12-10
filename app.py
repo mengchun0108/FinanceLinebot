@@ -76,7 +76,7 @@ def handle_message(event):
                     ),
                     MessageTemplateAction(
                         label="匯率換算",
-                        text = "請輸入\n換匯(換前幣別)/(換後幣別)/(金額)\n ex : 換匯USD/TWD/100"
+                        text = "請輸入\n換匯(換前幣別)/(換後幣別)/(金額)\nex : 換匯USD/TWD/100"
                     ),
                     MessageTemplateAction(
                         label="股票清單查詢",
@@ -169,12 +169,8 @@ def handle_message(event):
     #     content += f"更新時間：\n{time}"
 
     #     line_bot_api.push_message(uid, TextSendMessage(content))
-    def get_stock_info(msg, uid, line_bot_api):
-        if not re.match('#', msg):
-            return
-        
+    if re.match('#', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
-        
         text = msg[1:]
         realtime_data = twstock.realtime.get(text)
         
@@ -193,16 +189,11 @@ def handle_message(event):
         before = past.price[-1] if 8 < hour < 14 else past.price[-2]
         increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
 
-        content = f"{stock_info['name']}（{stock_info['code']}）\n"
-        content += "-------------\n"
-        content += f"現價: {now}\n"
-        content += f"漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
+        content = f"{stock_info['name']}（{stock_info['code']}）\n-------------\n"
+        content += f"現價: {now}\n漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
         content += f"更新時間：\n{time}"
 
         line_bot_api.push_message(uid, TextSendMessage(content))
-
-    # 調用函數
-    get_stock_info(msg, uid, line_bot_api)
 
     #  五檔 - 未開發功能
     # if re.match('[0-9]{4}五檔', msg):
