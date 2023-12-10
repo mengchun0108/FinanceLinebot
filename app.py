@@ -237,7 +237,7 @@ def handle_message(event):
 
     async def handle_stock_alert(uid, msg):
         if re.match("股價提醒", msg):
-            dataList = cache_users_stock()
+            dataList = cache_users_stock(user_name)
             alerts = []
 
             for user_data in dataList:
