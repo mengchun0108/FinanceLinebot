@@ -195,7 +195,7 @@ def handle_message(event):
             content += f"現價: {now}\n漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
             #content += f"更新時間：\n{time}"
 
-    line_bot_api.push_message(uid, TextSendMessage(content))
+            line_bot_api.push_message(uid, TextSendMessage(content))
 
     # 在你的主應用程式中呼叫這個異步函數
     asyncio.run(query_stock_async(line_bot_api, uid, msg))
