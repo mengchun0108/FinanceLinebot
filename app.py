@@ -213,7 +213,6 @@ def handle_message(event):
         line_bot_api.push_message(uid, TextSendMessage(content))
 
     ############################## 股票提醒區 ##############################
-
     async def process_stock_alert(uid, stock, operator, target_price):
         try:
             loop = asyncio.get_event_loop()
@@ -237,7 +236,9 @@ def handle_message(event):
 
     async def handle_stock_alert(uid, msg):
         if re.match("股價提醒", msg):
-            dataList = cache_users_stock(user_name)
+            db = constructor_stock()
+            collect = db[user_name]
+            dataList = list(collect.find({"userID": uid}))
             alerts = []
 
             for user_data in dataList:
