@@ -186,15 +186,17 @@ def handle_message(event):
         past = twstock.Stock(text)
 
         now = f"{realtime_info['latest_trade_price'][:5]}"
-        time = stock_info['time'].replace('-', '.').replace(stock_info['time'][11:13], str(int(stock_info['time'][11:13]) + 8))
+        #time = stock_info['time'].replace('-', '.').replace(stock_info['time'][11:13], str(int(stock_info['time'][11:13]) + 8))
 
-        hour = int(time[11:13])
+        # hour = int(time[11:13])
+        # before = past.price[-1] if 8 < hour < 14 else past.price[-2]
+        hour = int(stock_info['time'][11:13]) + 8
         before = past.price[-1] if 8 < hour < 14 else past.price[-2]
         increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
 
         content = f"{stock_info['name']}（{stock_info['code']}）\n-------------\n"
         content += f"現價: {now}\n漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
-        content += f"更新時間：\n{time}"
+        #content += f"更新時間：\n{time}"
 
         line_bot_api.push_message(uid, TextSendMessage(content))
 
