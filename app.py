@@ -241,13 +241,12 @@ def handle_message(event):
             dataList = list(collect.find({"userID": uid}))
             alerts = []
 
-            for user_data in dataList:
-                for stock_data in user_data:
-                    stock_symbol = stock_data['favorite_stock'][-5:-1]
-                    operator = stock_data['price'][0:1]
-                    target_price = float(stock_data['price'][1:])
-                    alert_message = await process_stock_alert(uid, stock_symbol, operator, target_price)
-                    alerts.append(alert_message)
+            for stock_data in dataList:
+                stock_symbol = stock_data['favorite_stock'][-5:-1]
+                operator = stock_data['price'][0:1]
+                target_price = float(stock_data['price'][1:])
+                alert_message = await process_stock_alert(uid, stock_symbol, operator, target_price)
+                alerts.append(alert_message)
 
             if alerts:
                 alert_message = "\n".join(alerts)
