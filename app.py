@@ -220,19 +220,25 @@ def handle_message(event):
         
         for j in range(len(content)):
             realtime_info = float(twstock.realtime.get(content[j][0])['realtime']['latest_trade_price'][:5])
-            tex = str(content[j]) + "/" + str(content[j][1]) + "/" + str(content[j][2])
+            tex = str(content[j]) + "/" + str(content[j][1]) + "/" + str(content[j][2] + str(realtime_info))
             line_bot_api.push_message(uid, TextSendMessage(text = tex ))
             if content[j][1] == ">":
                 if float(content[j][2]) > realtime_info:
-                    line_bot_api.push_message(uid, TextSendMessage(text = content[j] + "賣光光賺大發 !"))
+                    line_bot_api.push_message(uid, TextSendMessage(text = str(content[j]) + "賣光光賺大發 !"))
+                else:
+                    line_bot_api.push_message(uid, TextSendMessage(text = str(content[j]) + "別急別急再緩緩 !"))
             elif content[j][1] == "<":
                 if float(content[j][2]) < realtime_info:
-                    line_bot_api.push_message(UnicodeEncodeError, TextSendMessage(text = "問就是ALL IN !"))
+                    line_bot_api.push_message(UnicodeEncodeError, TextSendMessage(text = str(content[j]) + "問就是ALL IN !"))
+                else:
+                    line_bot_api.push_message(uid, TextSendMessage(text = str(content[j]) + "別急別急再緩緩 !"))
             elif content[j][1] == "=":
                 if float(content[j][2]) == realtime_info:
-                    line_bot_api.push_message(uid, TextSendMessage(text = "到設定的價錢了快去看看 !"))
+                    line_bot_api.push_message(uid, TextSendMessage(text = str(content[j]) + "到設定的價錢了快去看看 !"))
+                else:
+                    line_bot_api.push_message(uid, TextSendMessage(text = str(content[j]) + "別急別急再緩緩 !"))
             else:
-                line_bot_api.push_message(uid, TextSendMessage(text = "別急別急再緩緩 !"))
+                line_bot_api.push_message(uid, TextSendMessage(text = str(content[j]) + "別急別急再緩緩 !"))
 
 @handler.add(FollowEvent)
 def handle_follow(event):
