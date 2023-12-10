@@ -252,19 +252,19 @@ def handle_message(event):
         try:
             loop = asyncio.get_event_loop()
             stock_info = await loop.run_in_executor(None, twstock.realtime.get, stock)
-            realtime_info = float(stock_info['realtime']['latest_trade_price'][:5])
+            realtime_info = float(stock_info['realtime']['latest_trade_price'])
 
             if operator == ">" and realtime_info > target_price:
-                return f"{operator}賣光光賺大發！"
+                return f"{stock}賣光光賺大發！"
 
             elif operator == "<" and realtime_info < target_price:
-                return f"{operator}問就是ALL IN！"
+                return f"{stock}問就是ALL IN！"
 
             elif operator == "=" and realtime_info == target_price:
-                return f"{operator}到設定的價錢了快去看看！"
+                return f"{stock}到設定的價錢了快去看看！"
 
             else:
-                return f"{stock}別急別急再緩緩！"
+                return f"{stock}讓子彈再飛一會！"
 
         except Exception as e:
             return str(e)

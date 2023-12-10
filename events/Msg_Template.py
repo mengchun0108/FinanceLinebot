@@ -11,12 +11,11 @@ def stock_reply_other(stockNumber):
                                             QuickReplyButton(
                                                 action = MessageAction(
                                                     label = "查詢股票資訊",
-                                                    text = """
-                                                    a. 輸入了解(股票代號)以了解股票詳情
-                                                        ex : 了解0050
-                                                    b. 輸入#(股票代號)查詢即時漲幅
-                                                        ex : #0050
-                                                            """
+                                                    text = 
+"""a. 輸入了解(股票代號)以了解股票詳情
+    ex : 了解0050
+b. 輸入#(股票代號)查詢即時漲幅
+    ex : #0050"""
                                                 )
                                             ),
                                             QuickReplyButton(
@@ -28,20 +27,19 @@ def stock_reply_other(stockNumber):
                                             QuickReplyButton(
                                                 action = MessageAction(
                                                     label = "管理清單內容",
-                                                    text = """
-                                                    a. 加入股票：
-                                                        輸入關注(股票代號)
-                                                        想關注的價格：
-                                                        (可使用的符號有：>、<、=)
-                                                         ex : 
-                                                          輸入關注0050
-                                                          想關注的價格：>100
-                                                    b. 刪除特定股票：
-                                                         輸入刪除(股票代號)
-                                                          ex : 刪除0050
-                                                    c. 清空股票清單：
-                                                         輸入清空股票
-                                                        """
+                                                    text = 
+"""a. 加入股票：
+    輸入關注(股票代號)
+    想關注的價格：
+    (可使用的符號有：>、<、=)
+        ex : 
+        輸入關注0050
+        想關注的價格：>100
+b. 刪除特定股票：
+        輸入刪除(股票代號)
+        ex : 刪除0050
+c. 清空股票清單：
+        輸入清空股票"""
                                                     
                                                 )
                                             )
