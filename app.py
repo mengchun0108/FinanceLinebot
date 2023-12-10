@@ -248,7 +248,7 @@ def handle_message(event):
             realtime_info = float(stock_info['realtime']['latest_trade_price'])
 
             if operator == ">" and realtime_info > target_price:
-                return f"{stock}賣光光賺大發！"
+                return f"{stock}賣掉賺大錢！"
 
             elif operator == "<" and realtime_info < target_price:
                 return f"{stock}問就是ALL IN！"
