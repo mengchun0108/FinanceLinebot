@@ -169,11 +169,14 @@ def handle_message(event):
     #     content += f"更新時間：\n{time}"
 
     #     line_bot_api.push_message(uid, TextSendMessage(content))
-    if re.match('#', msg):
+    async def query_stock_async(line_bot_api, uid, msg):
+        if not re.match('#', msg):
+            return
+
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
         text = msg[1:]
         realtime_data = twstock.realtime.get(text)
-        
+
         if not realtime_data:
             line_bot_api.push_message(uid, TextSendMessage('找不到該股票的即時數據'))
             return
@@ -194,6 +197,9 @@ def handle_message(event):
         content += f"更新時間：\n{time}"
 
         line_bot_api.push_message(uid, TextSendMessage(content))
+
+    # 在你的主應用程式中呼叫這個異步函數
+    asyncio.run(query_stock_async(line_bot_api, uid, msg))
 
     #  五檔 - 未開發功能
     # if re.match('[0-9]{4}五檔', msg):
