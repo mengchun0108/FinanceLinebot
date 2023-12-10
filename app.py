@@ -147,47 +147,10 @@ def handle_message(event):
         return 0
 
     # 查詢股票資訊
-    # if re.match('#', msg):
-    #     line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
-    #     text = msg[1:]
-    #     realtime_data = twstock.realtime.get(text)
-    #     realtime_info = realtime_data['realtime']
-    #     stock_info = realtime_data['info']
-    #     past = twstock.Stock(text)
-
-    #     now = f"{realtime_info['latest_trade_price'][:5]}"
-    #     time = stock_info['time'].replace('-', '.').replace(stock_info['time'][11:13], str(int(stock_info['time'][11:13]) + 8))
-
-    #     hour = int(time[11:13])
-    #     before = past.price[-1] if 8 < hour < 14 else past.price[-2]
-    #     increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
-
-    #     content = f"{stock_info['name']}（{stock_info['code']}）\n"
-    #     content += "-------------\n"
-    #     content += f"現價: {now}\n"
-    #     content += f"漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
-    #     content += f"更新時間：\n{time}"
-
-    #     line_bot_api.push_message(uid, TextSendMessage(content))
-    async def query_stock_async(line_bot_api, uid, msg):
-        if not re.match('#', msg):
-            return
-
+    if re.match('#', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
         text = msg[1:]
-        loop = asyncio.get_event_loop()
-
-        try:
-            # 使用 run_in_executor 在另一個執行緒中執行同步的函數
-            realtime_data = await loop.run_in_executor(None, twstock.realtime.get, text)
-        except Exception as e:
-            line_bot_api.push_message(uid, TextSendMessage(f'股票查詢出現錯誤：{str(e)}'))
-            return
-
-        if not realtime_data:
-            line_bot_api.push_message(uid, TextSendMessage('找不到該股票的即時數據'))
-            return
-
+        realtime_data = twstock.realtime.get(text)
         realtime_info = realtime_data['realtime']
         stock_info = realtime_data['info']
         past = twstock.Stock(text)
@@ -199,14 +162,13 @@ def handle_message(event):
         before = past.price[-1] if 8 < hour < 14 else past.price[-2]
         increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
 
-        content = f"{stock_info['name']}（{stock_info['code']}）\n-------------\n"
-        content += f"現價: {now}\n漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
+        content = f"{stock_info['name']}（{stock_info['code']}）\n"
+        content += "-------------\n"
+        content += f"現價: {now}\n"
+        content += f"漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
         content += f"更新時間：\n{time}"
 
         line_bot_api.push_message(uid, TextSendMessage(content))
-
-    # 在你的主應用程式中呼叫這個異步函數
-    asyncio.run(query_stock_async(line_bot_api, uid, msg))
 
     #  五檔 - 未開發功能
     # if re.match('[0-9]{4}五檔', msg):
