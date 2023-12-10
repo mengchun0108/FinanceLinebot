@@ -220,7 +220,8 @@ def handle_message(event):
         
         for j in range(len(content)):
             realtime_info = float(twstock.realtime.get(content[j][0])['realtime']['latest_trade_price'][:5])
-            line_bot_api.push_message(uid, TextSendMessage(text = content[j] + "/" + content[j][1] + "/" + content[j][2] ))
+            tex = str(content[j]) + "/" + str(content[j][1]) + "/" + str(content[j][2])
+            line_bot_api.push_message(uid, TextSendMessage(text = tex ))
             if content[j][1] == ">":
                 if float(content[j][2]) > realtime_info:
                     line_bot_api.push_message(uid, TextSendMessage(text = content[j] + "賣光光賺大發 !"))
