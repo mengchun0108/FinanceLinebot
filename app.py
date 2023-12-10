@@ -216,7 +216,7 @@ def handle_message(event):
         # print(dataList)
         for i in range(len(dataList)):
             for k in range(len(dataList[i])):
-                content.append([dataList[i][k]['favorite_stock'][-4:], dataList[i][k]['price'][0:1], dataList[i][k]['price'][1:]])
+                content.append([dataList[i][k]['favorite_stock'][-5:-1], dataList[i][k]['price'][0:1], dataList[i][k]['price'][1:]])
         
         for j in range(len(content)):
             realtime_info = float(twstock.realtime.get(content[j][0])['realtime']['latest_trade_price'][:5])
