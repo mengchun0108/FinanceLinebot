@@ -8,6 +8,7 @@ from model.mongodb import *
 import re
 import twstock
 import datetime
+import asyncio
 
 app = Flask(__name__)
 
@@ -210,43 +211,84 @@ def handle_message(event):
 
     ############################## 股票提醒區 ##############################
 
-    if re.match("股價提醒", msg):
-        dataList = cache_users_stock()
-        content = []
-        # print(dataList)
-        for i in range(len(dataList)):
-            for k in range(len(dataList[i])):
-                content.append([dataList[i][k]['favorite_stock'][-5:-1], dataList[i][k]['price'][0:1], dataList[i][k]['price'][1:]])
+    # if re.match("股價提醒", msg):
+    #     dataList = cache_users_stock()
+    #     content = []
+    #     # print(dataList)
+    #     for i in range(len(dataList)):
+    #         for k in range(len(dataList[i])):
+    #             content.append([dataList[i][k]['favorite_stock'][-5:-1], dataList[i][k]['price'][0:1], dataList[i][k]['price'][1:]])
         
-        for j in range(len(content)):
-            realtime_info = float(twstock.realtime.get(content[j][0])['realtime']['latest_trade_price'][:5])
-            tex = str(content[j]) + "/" + str(content[j][1]) + "/" + str(content[j][2] + str(realtime_info))
-            line_bot_api.push_message(uid, TextSendMessage(text = tex ))
-            con = []
-            if content[j][1] == ">":
-                if float(content[j][2]) < realtime_info:
-                    line_bot_api.push_message(uid, TextSendMessage(text = str(content[j][1]) + "賣光光賺大發 !"))
-                else:
-                    con.append(str(content[j][1]))
-            elif content[j][1] == "<":
-                if float(content[j][2]) > realtime_info:
-                    line_bot_api.push_message(UnicodeEncodeError, TextSendMessage(text = str(content[j][1]) + "問就是ALL IN !"))
-                else:
-                    con.append(str(content[j][1]))
-            elif content[j][1] == "=":
-                if float(content[j][2]) == realtime_info:
-                    line_bot_api.push_message(uid, TextSendMessage(text = str(content[j][1]) + "到設定的價錢了快去看看 !"))
-                else:
-                    con.append(str(content[j][1]))
-            else:
-                line_bot_api.push_message(uid, TextSendMessage(text = str(content[j]) + "別急別急再緩緩 !"))
+    #     for j in range(len(content)):
+    #         realtime_info = float(twstock.realtime.get(content[j][0])['realtime']['latest_trade_price'][:5])
+    #         tex = str(content[j]) + "/" + str(content[j][1]) + "/" + str(content[j][2] + str(realtime_info))
+    #         line_bot_api.push_message(uid, TextSendMessage(text = tex ))
+    #         con = []
+    #         if content[j][1] == ">":
+    #             if float(content[j][2]) < realtime_info:
+    #                 line_bot_api.push_message(uid, TextSendMessage(text = str(content[j][1]) + "賣光光賺大發 !"))
+    #             else:
+    #                 con.append(content[j][1])
+    #         elif content[j][1] == "<":
+    #             if float(content[j][2]) > realtime_info:
+    #                 line_bot_api.push_message(UnicodeEncodeError, TextSendMessage(text = str(content[j][1]) + "問就是ALL IN !"))
+    #             else:
+    #                 con.append(content[j][1])
+    #         elif content[j][1] == "=":
+    #             if float(content[j][2]) == realtime_info:
+    #                 line_bot_api.push_message(uid, TextSendMessage(text = str(content[j][1]) + "到設定的價錢了快去看看 !"))
+    #             else:
+    #                 con.append(content[j][1])
+    #         else:
+    #             line_bot_api.push_message(uid, TextSendMessage(text = str(content[j]) + "別急別急再緩緩 !"))
 
-            conc = ",".join(con) + "：讓子彈再飛一會"
+    #         conc = ",".join(con) + "：讓子彈再飛一會"
 
-            if con == []:
-                pass
+    #     if con == []:
+    #         pass
+    #     else:
+    #         line_bot_api.push_message(uid, TextSendMessage(text = conc))
+    async def process_stock_alert(uid, stock, operator, target_price):
+        try:
+            loop = asyncio.get_event_loop()
+            stock_info = await loop.run_in_executor(None, twstock.realtime.get, stock)
+            realtime_info = float(stock_info['realtime']['latest_trade_price'][:5])
+
+            if operator == ">" and realtime_info > target_price:
+                return f"{operator}賣光光賺大發！"
+
+            elif operator == "<" and realtime_info < target_price:
+                return f"{operator}問就是ALL IN！"
+
+            elif operator == "=" and realtime_info == target_price:
+                return f"{operator}到設定的價錢了快去看看！"
+
             else:
-                line_bot_api.push_message(uid, TextSendMessage(text = conc))
+                return f"{stock}別急別急再緩緩！"
+
+        except Exception as e:
+            return str(e)
+
+    async def handle_stock_alert(uid, msg):
+        if re.match("股價提醒", msg):
+            dataList = cache_users_stock()
+            alerts = []
+
+            for user_data in dataList:
+                for stock_data in user_data:
+                    stock_symbol = stock_data['favorite_stock'][-5:-1]
+                    operator = stock_data['price'][0:1]
+                    target_price = float(stock_data['price'][1:])
+                    alert_message = await process_stock_alert(uid, stock_symbol, operator, target_price)
+                    alerts.append(alert_message)
+
+            if alerts:
+                alert_message = "\n".join(alerts)
+                line_bot_api.push_message(uid, TextSendMessage(text=alert_message))
+
+    # 在主程式中執行非同步操作
+    asyncio.run(handle_stock_alert(uid, msg))
+
 
 @handler.add(FollowEvent)
 def handle_follow(event):

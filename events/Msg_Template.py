@@ -10,20 +10,39 @@ def stock_reply_other(stockNumber):
                                         items = [
                                             QuickReplyButton(
                                                 action = MessageAction(
-                                                    label = "股票清單",
-                                                    text = "股票清單"
+                                                    label = "查詢股票資訊",
+                                                    text = """
+                                                    a. 輸入了解(股票代號)以了解股票詳情
+                                                        ex : 了解0050
+                                                    b. 輸入#(股票代號)查詢即時漲幅
+                                                        ex : #0050
+                                                            """
                                                 )
                                             ),
                                             QuickReplyButton(
                                                 action = MessageAction(
-                                                    label = "了解股票",
-                                                    text = "了解股票"
+                                                    label = "股票清單",
+                                                    text = "股票清單"
                                             )
                                             ),
                                             QuickReplyButton(
                                                 action = MessageAction(
-                                                    label = "關閉提醒",
-                                                    text = "關閉提醒"
+                                                    label = "管理清單內容",
+                                                    text = """
+                                                    a. 加入股票：
+                                                        輸入關注(股票代號)
+                                                        想關注的價格：
+                                                        (可使用的符號有：>、<、=)
+                                                         ex : 
+                                                          輸入關注0050
+                                                          想關注的價格：>100
+                                                    b. 刪除特定股票：
+                                                         輸入刪除(股票代號)
+                                                          ex : 刪除0050
+                                                    c. 清空股票清單：
+                                                         輸入清空股票
+                                                        """
+                                                    
                                                 )
                                             )
                                         ]
