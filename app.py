@@ -147,38 +147,47 @@ def handle_message(event):
         return 0
 
     #查詢股票資訊
-    if re.match('#', msg):
-        line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
-        text = msg[1:]
-        realtime_data = twstock.realtime.get(text)
-        realtime_info = realtime_data['realtime']
-        stock_info = realtime_data['info']
-        past = twstock.Stock(text)
-
-        now = f"{realtime_info['latest_trade_price'][:5]}"
-        time = stock_info['time'].replace('-', '.').replace(stock_info['time'][11:13], str(int(stock_info['time'][11:13]) + 8))
-
-        hour = int(time[11:13])
-        before = past.price[-1] if 8 < hour < 14 else past.price[-2]
-        increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
-
-        content = f"{stock_info['name']}（{stock_info['code']}）\n"
-        content += "-------------\n"
-        content += f"現價: {now}\n"
-        content += f"漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
-        content += f"更新時間：\n{time}"
-
-        line_bot_api.push_message(uid, TextSendMessage(content))
     # if re.match('#', msg):
     #     line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
     #     text = msg[1:]
-    #     url = f'https://tw.stock.yahoo.com/q/q?s={text}'
-    #     list_req = requests.get(url)
-    #     soup = BeautifulSoup(list_req.content, "html.parser")
-    #     target_element = soup.find("div", class_="D(f) Ai(fe) Mb(4px)")
-    #     now = target_element[]
-    #     content 
+    #     realtime_data = twstock.realtime.get(text)
+    #     realtime_info = realtime_data['realtime']
+    #     stock_info = realtime_data['info']
+    #     past = twstock.Stock(text)
 
+    #     now = f"{realtime_info['latest_trade_price'][:5]}"
+    #     time = stock_info['time'].replace('-', '.').replace(stock_info['time'][11:13], str(int(stock_info['time'][11:13]) + 8))
+
+    #     hour = int(time[11:13])
+    #     before = past.price[-1] if 8 < hour < 14 else past.price[-2]
+    #     increase = round(((float(now) - float(before)) / float(before)) * 100, 2)
+
+    #     content = f"{stock_info['name']}（{stock_info['code']}）\n"
+    #     content += "-------------\n"
+    #     content += f"現價: {now}\n"
+    #     content += f"漲跌: {round(float(now) - float(before), 2)}（{increase} %）\n"
+    #     content += f"更新時間：\n{time}"
+
+    #     line_bot_api.push_message(uid, TextSendMessage(content))
+    if re.match('#', msg):
+        line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
+        text = msg[1:]
+        url = f'https://tw.stock.yahoo.com/q/q?s={text}'
+        list_req = requests.get(url)
+        soup = BeautifulSoup(list_req.content, "html.parser")
+
+        now = soup.find("span", class_="Fz(32px)").text
+        increase = soup.find("span", class_="Fz(20px)").text
+        increase2 = soup.find("span", class_="Jc(fe)").text
+        name = soup.find("h1",class_="C($c-link-text) Fw(b) Fz(24px) Mend(8px)").text
+        name2 = soup.find("span",class_="C($c-icon) Fz(24px) Mend(20px)").text
+
+        content = name + "（" + name2 + "）\n"
+        content += "-------------\n"
+        content += "現價 : " + now
+        content += "漲跌 : " + increase + increase2
+
+        line_bot_api.push_message(uid, TextSendMessage(content))
 
     #  五檔 - 未開發功能
     # if re.match('[0-9]{4}五檔', msg):
