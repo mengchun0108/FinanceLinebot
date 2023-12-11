@@ -146,7 +146,7 @@ def handle_message(event):
         line_bot_api.push_message(uid, TextSendMessage(content))
         return 0
 
-    # 查詢股票資訊
+    #查詢股票資訊
     if re.match('#', msg):
         line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
         text = msg[1:]
@@ -169,6 +169,16 @@ def handle_message(event):
         content += f"更新時間：\n{time}"
 
         line_bot_api.push_message(uid, TextSendMessage(content))
+    # if re.match('#', msg):
+    #     line_bot_api.push_message(uid, TextSendMessage('稍等一下，股票查詢中...'))
+    #     text = msg[1:]
+    #     url = f'https://tw.stock.yahoo.com/q/q?s={text}'
+    #     list_req = requests.get(url)
+    #     soup = BeautifulSoup(list_req.content, "html.parser")
+    #     target_element = soup.find("div", class_="D(f) Ai(fe) Mb(4px)")
+    #     now = target_element[]
+    #     content 
+
 
     #  五檔 - 未開發功能
     # if re.match('[0-9]{4}五檔', msg):
@@ -212,19 +222,19 @@ def handle_message(event):
     ############################## 股票提醒區 ##############################
     async def process_stock_alert(uid, stock, operator, target_price):
         try:
-            loop = asyncio.get_event_loop()
-            stock_info = await loop.run_in_executor(None, twstock.realtime.get, stock)
-            realtime_info = float(stock_info['realtime']['latest_trade_price'])
+            url = f'https://tw.stock.yahoo.com/q/q?s={stock}'
+            list_req = requests.get(url)
+            soup = BeautifulSoup(list_req.content, "html.parser")
+
+            target_element = soup.find("span", class_="Fz(32px) Fw(b) Lh(1) Mend(16px) D(f) Ai(c) C($c-trend-up)")
+            realtime_info = float(target_element.text)
 
             if operator == ">" and realtime_info > target_price:
                 return f"{stock}賣掉賺大錢！"
-
             elif operator == "<" and realtime_info < target_price:
                 return f"{stock}問就是ALL IN！"
-
             elif operator == "=" and realtime_info == target_price:
                 return f"{stock}到設定的價錢了快去看看！"
-
             else:
                 return f"{stock}讓子彈再飛一會！"
 
