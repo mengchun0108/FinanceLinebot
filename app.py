@@ -190,7 +190,7 @@ def handle_message(event):
             icon = ""
 
         content = name + "（" + name2 + "）\n"
-        content += "-------------\n"
+        content += "--------------\n"
         content += "現價 : " + now.text + "\n"
         content += "漲跌 : " + icon + increase + increase2
 
