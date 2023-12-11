@@ -226,7 +226,7 @@ def handle_message(event):
             list_req = requests.get(url)
             soup = BeautifulSoup(list_req.content, "html.parser")
 
-            target_element = soup.find("span", class_="Fz(32px) Fw(b) Lh(1) Mend(16px) D(f) Ai(c) C($c-trend-up)")
+            target_element = soup.find("span", class_="Fz(32px)")
             realtime_info = float(target_element.text)
 
             if operator == ">" and realtime_info > target_price:
