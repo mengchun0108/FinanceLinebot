@@ -176,16 +176,23 @@ def handle_message(event):
         list_req = requests.get(url)
         soup = BeautifulSoup(list_req.content, "html.parser")
 
-        now = soup.find("span", class_="Fz(32px)").text
+        now = soup.find("span", class_="Fz(32px)")
         increase = soup.find("span", class_="Fz(20px)").text
         increase2 = soup.find("span", class_="Jc(fe)").text
         name = soup.find("h1",class_="C($c-link-text) Fw(b) Fz(24px) Mend(8px)").text
         name2 = soup.find("span",class_="C($c-icon) Fz(24px) Mend(20px)").text
 
+        if str(now)[67] == "u":
+            icon = "＋"
+        elif str(now)[67] == "down":
+            icon = "－"
+        else:
+            icon = "平"
+
         content = name + "（" + name2 + "）\n"
         content += "-------------\n"
-        content += "現價 : " + now
-        content += "漲跌 : " + increase + increase2
+        content += "現價 : " + now.text + "\n"
+        content += "漲跌 : " + icon + increase + increase2
 
         line_bot_api.push_message(uid, TextSendMessage(content))
 
