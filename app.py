@@ -187,7 +187,7 @@ def handle_message(event):
         elif str(now)[67] == "down":
             icon = "－"
         else:
-            icon = "平"
+            icon = str(now)[67]
 
         content = name + "（" + name2 + "）\n"
         content += "-------------\n"
