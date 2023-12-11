@@ -184,10 +184,10 @@ def handle_message(event):
 
         if str(now)[67] == "u":
             icon = "＋"
-        elif str(now)[67] == "down":
+        elif str(now)[67] == "d":
             icon = "－"
         else:
-            icon = str(now)[67]
+            icon = ""
 
         content = name + "（" + name2 + "）\n"
         content += "-------------\n"
